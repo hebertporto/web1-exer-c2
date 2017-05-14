@@ -1,0 +1,134 @@
+<!doctype html>
+<html>
+  <head>
+   
+    <title>Client Chat - Projeto S.D - Hebert Porto</title>
+    <!--Import Google Icon Font-->
+    <link href="http://fonts.googleapis.com/icon?family=Material+Icons" rel="stylesheet">
+      <!-- Compiled and minified CSS -->
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/materialize/0.98.2/css/materialize.min.css">
+    <!--Let browser know website is optimized for mobile-->
+    <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+    <style>
+      #square {
+        width: 30px;
+        height: 30px;
+        background: #000;
+        display: inline-block;
+        border: 1px solid #fff;
+        color:#fff;
+        text-align: center;
+        vertical-align: abs-middle;
+        top: 50%;
+        left: 50%;
+      }
+    </style>
+  </head>
+  <body>
+    <nav class="light-blue lighten-1" role="navigation">
+      <div class="nav-wrapper container"><a id="logo-container" href="#" class="brand-logo">Bingo - Web 1 - Hebert Porto</a>
+      </div>
+    </nav>
+    <div class="container">
+    <div class="section">
+
+      <!--   Icon Section   -->
+      <div class="row">
+          <div class="col s12 m3">
+          </div>
+
+          <div class="col s12 m6">
+            <div class="icon-block">
+              <h2 class="center light-blue-text"><i class="material-icons">group</i></h2>
+            <div id="sorteio"></div>
+            <div id="matrixBox">
+   
+            </div>
+            <button class="waves-effect waves-light btn" onclick="gerarCartela()">Gerar Cartela</button>
+            <button class="waves-effect waves-light btn" onclick="sortearNumeros()">Sortear Número</button>
+            </div>
+          </div>
+
+          <div class="col s12 m3">
+          </div>
+        </div>
+
+      </div>
+      <br><br>
+
+      <div class="section">
+
+      </div>
+    </div>
+    <script
+      src="https://code.jquery.com/jquery-3.2.1.min.js"
+      integrity="sha256-hwg4gsxgFZhOsEEamdOYGBf13FyQuiTwlAQgxVSNgt4="
+      crossorigin="anonymous"></script>
+    <!-- Compiled and minified JavaScript -->
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/materialize/0.98.2/js/materialize.min.js"></script> 
+    <script>
+
+      function gerarCartela() {
+        var x = 5;
+        var y = 5;
+        var str='';
+        var matrix = new Array();
+        var table = document.createElement('table');
+        var cartelaSorteada = new Array();
+        for (var i = 0; i < x; i++) {
+          var tr = document.createElement('tr');
+            for (var s = 0; s < y; s++) {
+                var td = document.createElement('td');
+                var numero = Math.floor((Math.random() * 100) +1);
+                var checkCartela = true;
+                
+                while(checkCartela) {
+                  if(cartelaSorteada.includes(numero)) {
+                    numero = Math.floor((Math.random() * 100) +1);
+                  }
+                  else 
+                  {
+                    checkCartela = false;
+                  }
+                }
+                cartelaSorteada.push(numero);
+                td.innerHTML = numero;
+                tr.appendChild(td);
+            };
+            table.appendChild(tr);
+        };
+        console.log('cartela', cartelaSorteada.sort(function(a, b) { return a - b;}));
+        document.getElementById("matrixBox").appendChild(table); 
+        // document.getElementById("matrixBox").innerHTML = str;
+      }
+
+      function insert(){
+        var p = document.createElement("p");
+        p.innerHTML = 'Texto via innerHTML';
+        document.getElementById('matrixBox').appendChild(p);
+      }
+
+      var numeroSorteados = new Array();
+      
+      function sortearNumeros(){
+         var num = Math.floor((Math.random() * 100) +1);
+         var checkCartela = true;   
+
+         while(checkCartela) {
+            if(numeroSorteados.includes(num)) {
+              num = Math.floor((Math.random() * 100) +1);
+            }
+            else 
+            {
+              checkCartela = false;
+            }
+          }
+          numeroSorteados.push(num);
+         var span = document.createElement('span');
+         span.innerHTML = num;
+        document.getElementById('sorteio').appendChild(span);         
+      }
+      // setInterval(sortearNumeros, 2000);
+    </script> 
+  </body>
+</html>
