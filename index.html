@@ -83,13 +83,11 @@
                 var checkCartela = true;
                 
                 while(checkCartela) {
-                  if(cartelaSorteada.includes(numero)) {
+                  if(cartelaSorteada.includes(numero)) 
                     numero = Math.floor((Math.random() * 100) +1);
-                  }
                   else 
-                  {
                     checkCartela = false;
-                  }
+                  
                 }
                 cartelaSorteada.push(numero);
                 td.innerHTML = numero;
@@ -115,13 +113,10 @@
          var checkCartela = true;   
 
          while(checkCartela) {
-            if(numeroSorteados.includes(num)) {
+            if(numeroSorteados.includes(num)) 
               num = Math.floor((Math.random() * 100) +1);
-            }
             else 
-            {
               checkCartela = false;
-            }
           }
           numeroSorteados.push(num);
          var span = document.createElement('span');
@@ -139,13 +134,10 @@
                 var checkCartela = true;
                 
                 while(checkCartela) {
-                  if(cartelaSorteada.includes(numero)) {
+                  if(cartelaSorteada.includes(numero)) 
                     numero = Math.floor((Math.random() * 100) +1);
-                  }
                   else 
-                  {
                     checkCartela = false;
-                  }
                 }
                 cartelaSorteada.push(numero);
                 td.innerHTML = numero;
