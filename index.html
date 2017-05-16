@@ -2,7 +2,7 @@
 <html>
   <head>
 
-    <title>Bingo - Projeto Web1 - Hebert Porto</title>
+    <title>Bingo 5000 - Projeto Web1 - Hebert Porto</title>
     <!--Import Google Icon Font-->
     <link href="http://fonts.googleapis.com/icon?family=Material+Icons" rel="stylesheet">
       <!-- Compiled and minified CSS -->
@@ -54,17 +54,25 @@
     <script src="https://cdnjs.cloudflare.com/ajax/libs/materialize/0.98.2/js/materialize.min.js"></script>
     <script>
 
-      function gerarCartela() {
+    const gerarCartela = () => {
         const x = 5;
         const y = 5;
+
         const table = document.createElement('table');
         const cartelaSorteada = new Array();
+        for (let i = 0; i < x; i++) {
+          let tr = document.createElement('tr');
+            for (let s = 0; s < y; s++) {
+                let td = document.createElement('td');
+                let numero = Math.floor((Math.random() * 100) +1);
+                let checkCartela = true;
 
-        for (var i = 0; i < x; i++) {
-          var tr = document.createElement('tr');
-            for (var s = 0; s < y; s++) {
-                var td = document.createElement('td');
-                var numero = retornaNumeroDistindoParaCartela(cartelaSorteada);
+                while(checkCartela) {
+                  if(cartelaSorteada.includes(numero))
+                    numero = Math.floor((Math.random() * 100) +1);
+                  else
+                    checkCartela = false;
+                }
                 cartelaSorteada.push(numero);
                 td.innerHTML = numero;
                 tr.appendChild(td);
@@ -73,18 +81,7 @@
         };
         console.log('cartela', cartelaSorteada.sort(function(a, b) { return a - b;}));
         document.getElementById("matrixBox").appendChild(table);
-      }
-
-      retornaNumeroDistindoParaCartela(array) {
-          let numero = Math.floor((Math.random() * 100) +1);
-          let checkCartela = true;
-          while(checkCartela) {
-            if(array.includes(numero))
-              numero = Math.floor((Math.random() * 100) +1);
-            else
-              checkCartela = false;
-          }
-          return numero;
+        // document.getElementById("matrixBox").innerHTML = str;
       }
 
       function insert(){
