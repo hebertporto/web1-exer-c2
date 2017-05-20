@@ -1,28 +1,14 @@
 <!doctype html>
 <html>
   <head>
-   
-    <title>Client Chat - Projeto S.D - Hebert Porto</title>
+    <meta charset="UTF-8">
+    <title>Bingo 5000 - Projeto Web1 - Hebert Porto</title>
     <!--Import Google Icon Font-->
     <link href="http://fonts.googleapis.com/icon?family=Material+Icons" rel="stylesheet">
       <!-- Compiled and minified CSS -->
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/materialize/0.98.2/css/materialize.min.css">
     <!--Let browser know website is optimized for mobile-->
     <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
-    <style>
-      #square {
-        width: 30px;
-        height: 30px;
-        background: #000;
-        display: inline-block;
-        border: 1px solid #fff;
-        color:#fff;
-        text-align: center;
-        vertical-align: abs-middle;
-        top: 50%;
-        left: 50%;
-      }
-    </style>
   </head>
   <body>
     <nav class="light-blue lighten-1" role="navigation">
@@ -30,123 +16,94 @@
       </div>
     </nav>
     <div class="container">
-    <div class="section">
+      <div class="section">
+        <!--   Icon Section   -->
+        <div class="row">
+            <div class="col s12 m3"></div>
 
-      <!--   Icon Section   -->
-      <div class="row">
-          <div class="col s12 m3">
-          </div>
+            <div class="col s12 m6">
+              <div class="icon-block">
+                <h2 class="center light-blue-text"><i class="material-icons">group</i></h2>
 
-          <div class="col s12 m6">
-            <div class="icon-block">
-              <h2 class="center light-blue-text"><i class="material-icons">group</i></h2>
-            <div id="sorteio"></div>
-            <div id="matrixBox">
-   
+                <div id="sorteio"></div>
+                <div id="matrixBox"></div>
+
+                <button class="waves-effect waves-light btn" onclick="gerarCartela()">Gerar Cartela</button><br /><br />
+                <button class="waves-effect waves-light btn" onclick="sortearNumeros()">Sortear Número</button><br /><br />
+                <button class="waves-effect waves-light btn" onclick="validarCartela()">Checar Cartela</button>
+              </div>
             </div>
-            <button class="waves-effect waves-light btn" onclick="gerarCartela()">Gerar Cartela</button>
-            <button class="waves-effect waves-light btn" onclick="sortearNumeros()">Sortear Número</button>
-            </div>
-          </div>
 
-          <div class="col s12 m3">
+            <div class="col s12 m3"></div>
           </div>
         </div>
+        <br /><br />
 
-      </div>
-      <br><br>
-
-      <div class="section">
-
-      </div>
+        <div class="section"></div>
     </div>
+
     <script
       src="https://code.jquery.com/jquery-3.2.1.min.js"
       integrity="sha256-hwg4gsxgFZhOsEEamdOYGBf13FyQuiTwlAQgxVSNgt4="
       crossorigin="anonymous"></script>
     <!-- Compiled and minified JavaScript -->
-    <script src="https://cdnjs.cloudflare.com/ajax/libs/materialize/0.98.2/js/materialize.min.js"></script> 
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/materialize/0.98.2/js/materialize.min.js"></script>
     <script>
+    const numeroSorteados = new Array();
+    const cartelaSorteada = new Array();
+    let ultimoSorteado;
 
-      function gerarCartela() {
-        var x = 5;
-        var y = 5;
-        var str='';
-        var matrix = new Array();
-        var table = document.createElement('table');
-        var cartelaSorteada = new Array();
-        for (var i = 0; i < x; i++) {
-          var tr = document.createElement('tr');
-            for (var s = 0; s < y; s++) {
-                var td = document.createElement('td');
-                var numero = Math.floor((Math.random() * 100) +1);
-                var checkCartela = true;
-                
-                while(checkCartela) {
-                  if(cartelaSorteada.includes(numero)) 
-                    numero = Math.floor((Math.random() * 100) +1);
-                  else 
-                    checkCartela = false;
-                  
-                }
+    const gerarCartela = () => {
+        const x = 5;
+        const y = 5;
+        const table = document.createElement('table');
+        for (let i = 0; i < x; i++) {
+          let tr = document.createElement('tr');
+            for (let s = 0; s < y; s++) {
+                let td = document.createElement('td');
+                const numero = gerarNumeroDistinto(cartelaSorteada);
                 cartelaSorteada.push(numero);
                 td.innerHTML = numero;
                 tr.appendChild(td);
             };
             table.appendChild(tr);
         };
-        console.log('cartela', cartelaSorteada.sort(function(a, b) { return a - b;}));
-        document.getElementById("matrixBox").appendChild(table); 
-        // document.getElementById("matrixBox").innerHTML = str;
+        document.getElementById("matrixBox").appendChild(table);
+      }
+      const gerarNumeroDistinto = arrayNumeros => {
+        let numero = Math.floor((Math.random() * 25) +1);
+        let checkCartela = true;
+        while(checkCartela) {
+          if(arrayNumeros.includes(numero))
+            numero = Math.floor((Math.random() * 25) +1);
+          else
+            checkCartela = false;
+        }
+        ultimoSorteado = numero;
+        return numero;
       }
 
-      function insert(){
-        var p = document.createElement("p");
-        p.innerHTML = 'Texto via innerHTML';
-        document.getElementById('matrixBox').appendChild(p);
-      }
+      const sortearNumeros = () => {
+        const numero = gerarNumeroDistinto(numeroSorteados);
+        numeroSorteados.push(numero);
+        const span = document.createElement('span');
+        span.innerHTML = numero + ' - ';
+        document.getElementById('sorteio').appendChild(span);
+        validarCartela();
+     }
 
-      var numeroSorteados = new Array();
-      
-      function sortearNumeros(){
-         var num = Math.floor((Math.random() * 100) +1);
-         var checkCartela = true;   
+      const validarCartela = () => {
+        const cartelas = document.getElementsByTagName('table');
 
-         while(checkCartela) {
-            if(numeroSorteados.includes(num)) 
-              num = Math.floor((Math.random() * 100) +1);
-            else 
-              checkCartela = false;
+        for (let s = 0; s <  cartelas.length; s++) {
+          for (let i = 0, row; row = cartelas[s].rows[i]; i++) {
+            for (let j = 0, col; col = row.cells[j]; j++) {
+                col.innerHTML = parseInt(col.innerHTML, 10) === ultimoSorteado ? 'X' : col.innerHTML;
+            }
           }
-          numeroSorteados.push(num);
-         var span = document.createElement('span');
-         span.innerHTML = num;
-        document.getElementById('sorteio').appendChild(span);         
+        }
       }
-
-      function validarCartela(){
-        var cartelas = document.getElementsByTagName('table');
-        for (var i = 0; i < cartelas[0].lenght - 1; i++) {
-          var tr = document.createElement('tr');
-            for (var s = 0; s < cartelas[0].lenght - 1; s++) {
-                var td = document.createElement('td');
-                var numero = Math.floor((Math.random() * 100) +1);
-                var checkCartela = true;
-                
-                while(checkCartela) {
-                  if(cartelaSorteada.includes(numero)) 
-                    numero = Math.floor((Math.random() * 100) +1);
-                  else 
-                    checkCartela = false;
-                }
-                cartelaSorteada.push(numero);
-                td.innerHTML = numero;
-                tr.appendChild(td);
-            };
-            table.appendChild(tr);
-        };
-      }
-      // setInterval(sortearNumeros, 2000);
-    </script> 
+      // setInterval(sortearNumeros, 5000);
+    </script>
   </body>
 </html>
