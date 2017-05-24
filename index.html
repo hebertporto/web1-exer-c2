@@ -53,6 +53,14 @@
     const cartelaSorteada = new Array();
     let ultimoSorteado;
 
+    const validarTd = (element) => {
+      if(element.style.backgroundColor === '' || element.style.backgroundColor === 'white') {
+        element.style.backgroundColor = "green";
+      } else {
+        element.style.backgroundColor = "white";
+      }
+    }
+    
     const gerarCartela = () => {
         const x = 5;
         const y = 5;
@@ -64,6 +72,7 @@
                 const numero = gerarNumeroDistinto(cartelaSorteada);
                 cartelaSorteada.push(numero);
                 td.innerHTML = numero;
+                td.setAttribute("onclick", "validarTd(this)");
                 tr.appendChild(td);
             };
             table.appendChild(tr);
